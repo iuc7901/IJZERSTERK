@@ -65,12 +65,6 @@ export default function Home() {
           data.map((each) => (
             <Grid item xs={12} sm={6} md={4}>
               <Paper elevation={3}>
-                {/* <Avatar
-                  variant="square"
-                  src={each?.avatar}
-                  height="200px"
-                  width="100%"
-                /> */}
                 <img src={each?.avatar} height="200" width="100%" />
                 <Typography bgcolor="#4194E6" color="white" align="center">
                   {each?.memberCount} Members
