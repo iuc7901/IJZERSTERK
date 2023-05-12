@@ -8,17 +8,20 @@ import {
   CircularProgress,
   TextField,
   Typography,
+  Avatar,
 } from "@mui/material";
 import Link from "next/link";
 import OtpInput from "react-otp-input";
 import axios from "axios";
 import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 
 function Login() {
   const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -124,7 +127,7 @@ function Login() {
           <Typography variant="h6" fontWeight="bold">
             {otpsent ? "Verify OTP" : "Login"}
           </Typography>
-          <Typography variant="caption" color="#747474">
+          <Typography variant="caption" color="#747474" sx={{ mb: 3 }}>
             Please enter {otpsent && "the OTP sent to"} your phone number
           </Typography>
 
@@ -135,14 +138,10 @@ function Login() {
               numInputs={6}
               renderSeparator={<span></span>}
               inputStyle={{
-                width: 40,
-                [theme.breakpoints.down("md")]: {
-                  width: 20,
-                },
-                height: 40,
+                width: "15%",
+                height: 50,
+                marginRight: "2%",
                 background: "#F2F2F2",
-                marginTop: 20,
-                marginRight: 10,
                 border: "none",
                 borderRadius: 5,
               }}
@@ -167,7 +166,6 @@ function Login() {
                   <InputAdornment position="start">+ 91</InputAdornment>
                 ),
               }}
-              sx={{ my: 3 }}
             />
           )}
 
@@ -198,10 +196,7 @@ function Login() {
             disableElevation
             onClick={otpsent ? handleVerifyOTP : handleLogin}
             sx={{
-              bgcolor: "#4194E6",
-              ":hover": {
-                bgcolor: "#4194E6",
-              },
+              mt: 3,
             }}
           >
             {loading ? (
@@ -216,11 +211,18 @@ function Login() {
       </Grid>
 
       <Hidden smDown>
-        <Grid item xs={12} sm={6}>
-          {/* <Box width="100%" height="100vh">
-          <img src="/images/LoginImage.svg" width="100%" height="100%" />
-        </Box> */}
-          <img src="/images/LoginImage.svg" width="100%" height="auto" />
+        <Grid item xs={12} sm={6} sx={{ height: "100vh" }}>
+          <Avatar
+            variant="square"
+            src="/images/login-image.png"
+            sx={{ width: "100%", height: "100%" }}
+          />
+          {/* <img
+            src="/images/login-image.png"
+            width="100%"
+            height="100%"
+            style={{ objectfit: "cover" }}
+          /> */}
         </Grid>
       </Hidden>
     </Grid>

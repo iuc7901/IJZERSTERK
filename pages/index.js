@@ -15,7 +15,7 @@ export default function Home() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [data, setData] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const loadCommunities = () => {
     setLoading(true);
@@ -50,7 +50,7 @@ export default function Home() {
         All Communities
       </Typography>
 
-      {loading && (
+      {loading ? (
         <Box
           display="flex"
           justifyContent="center"
@@ -59,36 +59,43 @@ export default function Home() {
         >
           <CircularProgress />
         </Box>
+      ) : (
+        <Grid container py={5} spacing={3}>
+          {data && data.length > 0 ? (
+            data.map((each) => (
+              <Grid item xs={12} sm={6} md={4}>
+                <Paper elevation={3}>
+                  <Avatar
+                    variant="square"
+                    src={each?.avatar}
+                    sx={{ width: "100%", height: 200 }}
+                  />
+                  <Typography bgcolor="#4194E6" color="white" align="center">
+                    {each?.memberCount} Members
+                  </Typography>
+                  <Stack spacing={1} p={2}>
+                    <Typography fontWeight="bold">
+                      {each?.name || "No Name"}
+                    </Typography>
+                    <Typography variant="subtitle1">
+                      Category : {each?.category?.name || "No Category"}
+                    </Typography>
+                    <Typography variant="subtitle2" color="#A5A5A5">
+                      {each?.city || "No City"}, {each?.state || "No State"},
+                      {each?.country || "No Country"}
+                    </Typography>
+                    <Typography fontWeight="bold">
+                      Code : {each?.code}
+                    </Typography>
+                  </Stack>
+                </Paper>
+              </Grid>
+            ))
+          ) : (
+            <> No Communities</>
+          )}
+        </Grid>
       )}
-      <Grid container py={5} spacing={3}>
-        {data && data.length > 0 ? (
-          data.map((each) => (
-            <Grid item xs={12} sm={6} md={4}>
-              <Paper elevation={3}>
-                <img src={each?.avatar} height="200" width="100%" />
-                <Typography bgcolor="#4194E6" color="white" align="center">
-                  {each?.memberCount} Members
-                </Typography>
-                <Stack spacing={1} p={2}>
-                  <Typography fontWeight="bold">
-                    {each?.name || "No Name"}
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    Category : {each?.category?.name || "No Category"}
-                  </Typography>
-                  <Typography variant="subtitle2" color="#A5A5A5">
-                    {each?.city || "No City"}, {each?.state || "No State"},
-                    {each?.country || "No Country"}
-                  </Typography>
-                  <Typography fontWeight="bold">Code : {each?.code}</Typography>
-                </Stack>
-              </Paper>
-            </Grid>
-          ))
-        ) : (
-          <> No Communities</>
-        )}
-      </Grid>
     </Box>
   );
 }
